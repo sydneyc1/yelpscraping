@@ -3,7 +3,7 @@ import urllib
 
 import pandas as pd
 
-source = urllib.urlretrieve('https://www.yelp.com/search?find_desc=Restaurants&find_loc=Nashville%2C+TN&ns=1')
+source = urllib.urlopen('https://www.yelp.com/search?find_desc=Restaurants&find_loc=Nashville%2C+TN&ns=1').read()
 page_soup = bs.BeautifulSoup(source, 'html.parser')
 mains = page_soup.find_all("div", {"class": "lemon--div__373c0__1mboc border-color--default__373c0__2oFDT"})
 main = mains[0]  # First item of mains
@@ -18,7 +18,7 @@ price = []
 
 for main in mains:
     try:
-        Bizname.append(sec.address.find("a", {"class": "lemon--a__373c0__IEZFH link__373c0__29943 "
+        Bizname.append(main.address.find("a", {"class": "lemon--a__373c0__IEZFH link__373c0__29943 "
                                                        "link-color--blue-dark__373c0__1mhJo "
                                                        "link-size--inherit__373c0__2JXk5"}).text)
     except:
